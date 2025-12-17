@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 
 const EventDetails = () => {
@@ -17,7 +17,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/events/${id}`); // We need to add this GET route!
+        const res = await api.get('/events/' + id); // We need to add this GET route!
         setEvent(res.data);
         setLoading(false);
       } catch (error) {
@@ -41,12 +41,12 @@ const EventDetails = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
 
-      const res = await axios.post(`http://localhost:5000/api/events/${id}/rsvp`, {}, config);
+      const res = await api.post('/events/' + id + '/rsvp', {}, config);
       
       toast.success(res.data.message);
       
       // Refresh event data to show new progress bar
-      const updatedRes = await axios.get(`http://localhost:5000/api/events/${id}`);
+      const updatedRes = await api.get('/events/' + id);
       setEvent(updatedRes.data);
 
     } catch (error) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import EventCard from '../components/EventCard';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/events');
+        const res = await api.get('/events');
         setEvents(res.data);
         setLoading(false);
       } catch (error) {

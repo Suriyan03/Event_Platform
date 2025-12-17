@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,7 @@ const CreateEvent = () => {
         headers: { Authorization: `Bearer ${token}` } // Send token to backend
       };
 
-      await axios.post('http://localhost:5000/api/events', formData, config);
+      await api.post('/events', formData, config);
       
       toast.success("Event Created!");
       navigate('/');

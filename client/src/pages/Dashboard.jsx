@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 import EventCard from '../components/EventCard';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ const Dashboard = () => {
       const token = localStorage.getItem('token');
       const config = { headers: { Authorization: `Bearer ${token}` } };
       
-      const res = await axios.get('http://localhost:5000/api/events/user/dashboard', config);
+      const res = await api.get('/events/user/dashboard', config);
       setCreatedEvents(res.data.createdEvents);
       setAttendingEvents(res.data.attendingEvents);
       setLoading(false);
@@ -33,7 +33,7 @@ const Dashboard = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/events/${eventId}`, {
+      await api.delete('/events/' + eventId, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
